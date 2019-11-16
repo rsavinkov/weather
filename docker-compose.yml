@@ -1,0 +1,33 @@
+version: "3.1"
+services:
+
+    postgres:
+      image: postgres:11.1-alpine
+      container_name: weather-postgres
+      working_dir: /application
+      volumes:
+        - .:/application
+      environment:
+        - POSTGRES_USER=root
+        - POSTGRES_PASSWORD=root
+        - POSTGRES_DB=weather
+      ports:
+        - "8084:5432"
+
+    webserver:
+      image: nginx:alpine
+      container_name: weather-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8080:80"
+
+    php-fpm:
+      build: docker/php-fpm
+      container_name: weather-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+
