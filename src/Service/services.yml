@@ -1,0 +1,8 @@
+---
+
+services:
+  rsavinkov\Weather\Service\ScaleConverter\ScaleConverter:
+    class: 'rsavinkov\Weather\Service\ScaleConverter\ScaleConverter'
+    arguments:
+      - '@rsavinkov\Weather\Service\ScaleConverter\CelsiusConverter'
+      - '@rsavinkov\Weather\Service\ScaleConverter\FahrenheitConverter'
