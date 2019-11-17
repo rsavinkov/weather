@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace rsavinkov\Weather;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;

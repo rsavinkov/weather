@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "rsavinkov\\Weather\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "rsavinkov\\Weather\\Tests\\": "tests/"
         }
     },
     "replace": {
