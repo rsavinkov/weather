@@ -6,3 +6,10 @@ services:
     arguments:
       - '@rsavinkov\Weather\Service\ScaleConverter\CelsiusConverter'
       - '@rsavinkov\Weather\Service\ScaleConverter\FahrenheitConverter'
+
+  rsavinkov\Weather\Service\PredictionDataParser\PredictionDataParser:
+    class: 'rsavinkov\Weather\Service\PredictionDataParser\PredictionDataParser'
+    arguments:
+      - '@rsavinkov\Weather\Service\PredictionDataParser\CsvPredictionDataParser'
+      - '@rsavinkov\Weather\Service\PredictionDataParser\JsonPredictionDataParser'
+      - '@rsavinkov\Weather\Service\PredictionDataParser\XmlPredictionDataParser'
