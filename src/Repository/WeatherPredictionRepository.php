@@ -2,10 +2,13 @@
 
 namespace rsavinkov\Weather\Repository;
 
-use rsavinkov\Weather\DTO\Prediction;
-use rsavinkov\Weather\Entity\WeatherPrediction;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use rsavinkov\Weather\DTO\AveragePrediction;
+use rsavinkov\Weather\DTO\Prediction;
+use rsavinkov\Weather\Entity\WeatherPrediction;
+use rsavinkov\Weather\Service\ScaleConverter\CelsiusConverter;
 
 /**
  * @method WeatherPrediction|null find($id, $lockMode = null, $lockVersion = null)
@@ -42,5 +45,42 @@ EOS
                 'updated_at' => $prediction->getUpdatedAt()->format("Y-m-d H:i:s")
             ]);
         }
+    }
+
+    /**
+     * @param string $city
+     * @param DateTime $startDate
+     * @param DateTime $endDate
+     * @return AveragePrediction[]
+     */
+    public function getAvgPredictionsByCity(string $city, DateTime $startDate, DateTime $endDate): array
+    {
+        $arrResult = $this->createQueryBuilder('wp')
+            ->select('wp.city, wp.predictionsDateTime, AVG(wp.celsiusTemperature) as celsiusTemperature, max(wp.updatedAt) as updatedAt')
+            ->andWhere('wp.city = :city')
+            ->andWhere('wp.predictionsDateTime >= :startDate')
+            ->andWhere('wp.predictionsDateTime < :endDate')
+            ->setParameters([
+                'city' => $city,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+            ])
+            ->groupBy('wp.city')
+            ->addGroupBy('wp.predictionsDateTime')
+            ->orderBy('wp.city')
+            ->addOrderBy('wp.predictionsDateTime')
+            ->getQuery()->getArrayResult();
+
+        return array_map(
+            function (array $predictionData) {
+                return new AveragePrediction(
+                    $predictionData['city'],
+                    $predictionData['predictionsDateTime'],
+                    $predictionData['celsiusTemperature'],
+                    DateTime::createFromFormat('Y-m-d H:i:s', $predictionData['updatedAt'])
+                );
+            },
+            $arrResult
+        );
     }
 }

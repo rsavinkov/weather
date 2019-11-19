@@ -13,6 +13,17 @@ class ScaleConverter
         $this->converters = $converters;
     }
 
+    public function support(string $scale): bool
+    {
+        foreach ($this->converters as $converter) {
+            if($converter->support($scale)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function toCelsius(string $scale, int $temperature): int
     {
         foreach ($this->converters as $converter) {
