@@ -1,0 +1,1 @@
+*   *   *   *   *   php /opt/app/bin/console weather:predictions:collect 10 --env=prod
