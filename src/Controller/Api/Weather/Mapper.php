@@ -25,7 +25,8 @@ class Mapper
                     $averagePrediction->city,
                     $averagePrediction->predictionsDateTime->format('Y-m-d H:i:s'),
                     $scale,
-                    $this->scaleConverter->fromCelsius($scale, $averagePrediction->celsiusTemperature)
+                    $this->scaleConverter->fromCelsius($scale, $averagePrediction->celsiusTemperature),
+                    $averagePrediction->updatedAt->getTimestamp()
                 )
             );
         }
