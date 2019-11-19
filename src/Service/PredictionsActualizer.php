@@ -2,6 +2,7 @@
 
 namespace rsavinkov\Weather\Service;
 
+use DateTime;
 use rsavinkov\Weather\Integration\Prediction\PredictionProviderInterface;
 use rsavinkov\Weather\Repository\WeatherPredictionRepository;
 use rsavinkov\Weather\Service\PredictionDataParser\PredictionDataParser;
@@ -23,15 +24,19 @@ class PredictionsActualizer
         $this->integrations = $integrations;
     }
 
-    public function updateAll(?OutputInterface $output = null)
+    public function updateAll(int $upcomingDaysNumber, ?OutputInterface $output = null)
     {
-        foreach ($this->integrations as $integration) {
-            $this->writeln($output,"Getting predictions from {$integration->getPartnerName()}");
-            $predictionData = $integration->getPredictionData();
-            $predictions = $this->predictionDataParser->mapToPredictions($predictionData);
-            $this->writeln($output,"Predictions number: " . count($predictions));
-            $this->weatherPredictionRepository->updateFromPredictions(...$predictions);
-            $this->writeln($output, 'Done!');
+        $currentDay = new DateTime('today');
+        for($i = 0; $i <= $upcomingDaysNumber; $i++) {
+            foreach ($this->integrations as $integration) {
+                $this->writeln($output,"Getting predictions from {$integration->getPartnerName()} on {$currentDay->format('Y-m-d')}");
+                $predictionData = $integration->getPredictionData($currentDay);
+                $predictions = $this->predictionDataParser->mapToPredictions($predictionData);
+                $this->writeln($output,"Predictions number: " . count($predictions));
+                $this->weatherPredictionRepository->updateFromPredictions(...$predictions);
+                $this->writeln($output, 'Done!');
+            }
+            $currentDay->add(new \DateInterval('P1D'));
         }
     }
 
