@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="rsavinkov\Weather\Repository\WeatherPredictionRepository")
  * @ORM\Table(uniqueConstraints={
  *     @ORM\UniqueConstraint(
- *         name="weather_prediction__partner_city_datetime__uniq",
- *         columns={"partner","city", "predictions_date_time"}
+ *         name="weather_prediction__city_datetime_partner__uniq",
+ *         columns={"city", "predictions_date_time", "partner"}
  *     )
  * })
  */
