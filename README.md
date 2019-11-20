@@ -37,8 +37,7 @@ can see it in repository
 any available scale in `ScaleConverter`
 - `public/index.html` - place for simple SPA
 
-### What I can do better 
-#### (But didn't, because I want to send you assignment ASAP)
+### TODO
 - Create tests
 - Install nelmio-bundle and create auto-documentation
 - Create simple frontend on Vue.js or at least JQuery (`public/index.html`)
