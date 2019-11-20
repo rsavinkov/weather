@@ -56,7 +56,7 @@ any available scale in `ScaleConverter`
 
 ## Documentation
 
-###Command
+### Command
 #### weather:predictions:collect
 Usage:
 `php bin/console weather:predictions:collect [<upcomingDaysNumber>]`
