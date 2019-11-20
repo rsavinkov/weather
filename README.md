@@ -35,12 +35,14 @@ in `ScaleConverter`
 can see it in repository
 - `src/Controller/Api/Weather` - Endpoint classes, like Controller, Validator, Mapper. Mapper can convert temperature to 
 any available scale in `ScaleConverter`
+- `src/Command/WeatherPredictionsCollectCommand.php` - command for updating predictions
+- `crontab` - crontab for running command to update predicitons
 - `public/index.html` - place for simple SPA
 
 ### TODO
 - Create tests
 - Install nelmio-bundle and create auto-documentation
-- Create simple frontend on Vue.js or at least JQuery (`public/index.html`)
+- Create simple frontend (`public/index.html`)
 
 ## Dev-environment
 
